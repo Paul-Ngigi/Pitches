@@ -1,7 +1,11 @@
+import os
+
+
 class Config:
     """
     General configuration class
     """
+    SECRET_KEY = os.environ.get('SECRET_KEY')
     pass
 
 
