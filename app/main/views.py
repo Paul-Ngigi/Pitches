@@ -18,6 +18,13 @@ def pitches():
     title = 'Pitches -  Welcome to The Pitches Website'
     return render_template('pitches.html', title=title)
 
+@main.route('/addpitches')
+@login_required
+def addpitches():
+    title = 'Add-Pitch -  Welcome to The Pitches Website'
+    return render_template('addpitch.html', title=title)
+
+
 @main.route('/user/<uname>')
 def profile(uname):
     user = User.query.filter_by(username = uname).first()
@@ -58,3 +65,17 @@ def update_pic(uname):
         user.profile_pic_path = path
         db.session.commit()
     return redirect(url_for('main.profile',uname=uname))
+
+
+@main.route('/category')
+def category():
+    pitches = pitch.query.all()
+    sales = pitch.query.filter_by(category = 'sales').all() 
+    interview = pitch.query.filter_by(category = 'interview').all()
+    elevator = pitch.query.filter_by(category = 'elevator').all()
+    promotion = pitch.query.filter_by(category = 'promotion').all()
+    personal = pitch.query.filter_by(category = 'personal').all()
+    pickuplines = pitch.query.filter_by(category = 'pickuplines').all()
+
+    return render_template('category.html', pitches = pitches, sales = sales,interview = interview, 
+    elevator = elevator,promotion = promotion, personal = personal, pickuplines = pickuplines)
