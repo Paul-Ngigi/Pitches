@@ -3,7 +3,7 @@ from . import main
 from flask_login import login_required
 from ..models import User
 from .. import db, photos   
-from .forms import UpdateProfile
+from .forms import UpdateProfile, PitchForm, CommentsForm
 
 
 @main.route('/')
@@ -18,11 +18,17 @@ def pitches():
     title = 'Pitches -  Welcome to The Pitches Website'
     return render_template('pitches.html', title=title)
 
-@main.route('/addpitches')
+@main.route('/addpitches', methods = ['GET', 'POST'])
 @login_required
 def addpitches():
+    form = PitchForm()
+    if form.validate_on_submit():
+        pitches = pitch(title = form.title.data, content = form.content.data, category = form.category.data, user_id = current_user.id)
+        pitches.save_pitch()
+
+        return(redirect(url_for('main.category')))
     title = 'Add-Pitch -  Welcome to The Pitches Website'
-    return render_template('addpitch.html', title=title)
+    return render_template('addpitch.html', title=title, pitch_form=form)
 
 
 @main.route('/user/<uname>')
