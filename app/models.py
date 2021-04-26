@@ -14,6 +14,8 @@ class User(UserMixin,db.Model):
     profile_pic_path = db.Column(db.String())
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     pass_secure = db.Column(db.String(255))
+    pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
+
     
     @property
     def password(self):
@@ -38,9 +40,44 @@ class User(UserMixin,db.Model):
     
 class Role(db.Model):
     __tablename__ = 'roles'
+    
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(255))
     users = db.relationship('User', backref='role', lazy='dynamic')
     
     def __repr__(self):
         return f'User {self.name}'
+    
+class pitch(db.Model):
+    __tablename__ = 'pitches'
+
+    id = db.Column(db.Integer, primary_key = True)
+    title = db.Column(db.String(255))
+    content = db.Column(db.String())
+    category = db.Column(db.String(255))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    comments = db.relationship('comment', backref='pitch', lazy='dynamic')
+
+    def save_pitch(self):        
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return f'pitch {self.title}'
+
+
+class comment(db.Model):
+    __tablename__ = 'comments'
+
+    id = db.Column(db.Integer, primary_key = True)
+    content = db.Column(db.String())
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    pitch_id = db.Column(db.Integer, db.ForeignKey('pitches.id'))
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def __repr__(self):
+       return f'comment {self.content}'
+
