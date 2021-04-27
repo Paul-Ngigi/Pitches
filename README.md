@@ -7,7 +7,7 @@
 This  is a flask application that allows users to post one minute pitches and also allows other users who have signed up to comment and upvote or downvote a pitch. It also allows a person to signup to be able to access the functionalities of the application
 
 
-## Development Installation
+## Installation Instruction
 To get the code..
 
 1. Cloning the repository:
@@ -36,7 +36,7 @@ Open the application on your browser `127.0.0.1:5000`.
 
 ## Technology used
 
-* [Python3.6](https://www.python.org/)
+* [Python3.9](https://www.python.org/)
 * [Flask](http://flask.pocoo.org/)
 * [Heroku](https://heroku.com)
 
@@ -46,7 +46,7 @@ Open the application on your browser `127.0.0.1:5000`.
 
 ## Contact Information 
 
-If you have any question or contributions, please email me at [paulkush7777@gmail.com]
+If you have any question or contributions, please email me at [paulkush7777@gmail.com
 
 ## License
-* *MIT License:*
+* *MIT License*
