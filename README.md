@@ -1,21 +1,10 @@
 # PITCHES
 ## Author
 
-[Paul-Ngigi](https://github.com/Paul-Ngigi
+[Paul-Ngigi] https://github.com/Paul-Ngigi
 
 # Description
 This  is a flask application that allows users to post one minute pitches and also allows other users who have signed up to comment and upvote or downvote a pitch. It also allows a person to signup to be able to access the functionalities of the application
-
-
-## BDD
-| Behaviour | Input | Output |
-| :---------------- | :---------------: | ------------------: |
-| Load the page | **On page load** | Get all posts, Select between signup and login|
-| Select SignUp| **Email**,**Username**,**Password** | Redirect to login|
-| Select Login | **Username** and **password** | Redirect to page with app pitches based on categories and commenting section|
-| Select comment button | **Comment** | Form that you input your comment|
-| Click on submit |  | Redirect to all comments tamplate with your comment and other comments|
-
 
 
 ## Development Installation
