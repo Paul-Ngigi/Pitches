@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, abort
 from . import main
 from flask_login import login_required
-from ..models import User
+
 from .. import db, photos   
 from .forms import UpdateProfile, PitchForm, CommentsForm
 
@@ -15,20 +15,36 @@ def index():
 @main.route('/pitches')
 @login_required
 def pitches():
+    pitches = Pitch.query.all()
+    sales = Pitch.query.filter_by(category = 'sales').all() 
+    interview = Pitch.query.filter_by(category = 'interview').all()
+    elevator = Pitch.query.filter_by(category = 'elevator').all()
+    promotion = Pitch.query.filter_by(category = 'promotion').all()
+    personal = Pitch.query.filter_by(category = 'personal').all()
+    pickuplines = Pitch.query.filter_by(category = 'pickuplines').all()
+
     title = 'Pitches -  Welcome to The Pitches Website'
-    return render_template('pitches.html', title=title)
+    return render_template('pitches.html', title=title , pitches = pitches, sales = sales,interview = interview, 
+    elevator = elevator,promotion = promotion, personal = personal, pickuplines = pickuplines)
 
 @main.route('/addpitches', methods = ['GET', 'POST'])
 @login_required
 def addpitches():
     form = PitchForm()
     if form.validate_on_submit():
-        pitches = pitch(title = form.title.data, content = form.content.data, category = form.category.data, user_id = current_user.id)
-        pitches.save_pitch()
+        title = form.title.data
+        post = form.post.data
+        category = form.category.data
+        user_id = current_user
+        new_pitch_object = Pitch(post=post,user_id=current_user._get_current_object().id,category=category,title=title)
+        new_pitch_object.save_p()
+        return redirect(url_for('main.index'))
+        
 
         return(redirect(url_for('main.category')))
     title = 'Add-Pitch -  Welcome to The Pitches Website'
     return render_template('addpitch.html', title=title, pitch_form=form)
+
 
 
 @main.route('/user/<uname>')
@@ -73,15 +89,3 @@ def update_pic(uname):
     return redirect(url_for('main.profile',uname=uname))
 
 
-@main.route('/category')
-def category():
-    pitches = pitch.query.all()
-    sales = pitch.query.filter_by(category = 'sales').all() 
-    interview = pitch.query.filter_by(category = 'interview').all()
-    elevator = pitch.query.filter_by(category = 'elevator').all()
-    promotion = pitch.query.filter_by(category = 'promotion').all()
-    personal = pitch.query.filter_by(category = 'personal').all()
-    pickuplines = pitch.query.filter_by(category = 'pickuplines').all()
-
-    return render_template('category.html', pitches = pitches, sales = sales,interview = interview, 
-    elevator = elevator,promotion = promotion, personal = personal, pickuplines = pickuplines)
