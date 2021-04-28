@@ -20,17 +20,24 @@ class ProdConfig(Config):
     """
     Production configuration class
     """
-    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI = "postgresql://uafyzmmvcusmlk:8e384a8b4a2aeb83b754ec59184d64504bf720cca1b49896747248f5e16695f2@ec2-3-233-43-103.compute-1.amazonaws.com:5432/d9tfm57fdoaa1l?sslmode=require"
 
 
 class DevConfig(Config):
     """
     Development configuration class
     """
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://root:root@localhost/pitches'
     DEBUG = True
+    
+    
+class TestConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://root:root@localhost/pitches_test'
+
 
 
 config_options = {
     'production': ProdConfig,
-    'development': DevConfig
+    'development': DevConfig,
+    'test':TestConfig
 }
